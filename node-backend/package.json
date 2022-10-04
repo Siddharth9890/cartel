@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "jest --coverage",
-    "test-async": "--detectOpenHandles",
+    "test-async": "jest --detectOpenHandles",
     "coverage": "jest --collect-coverage"
   },
   "repository": {
@@ -27,6 +27,7 @@
     "express-jwt": "^6.1.0",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
+    "mongodb-memory-server": "^8.9.3",
     "mongoose": "^5.13.7",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"

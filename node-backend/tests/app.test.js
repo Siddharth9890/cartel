@@ -4,6 +4,7 @@ require("dotenv").config({
 const request = require("supertest");
 const app = require("../app");
 const { db, connect, actions } = require("../src/db");
+const { connectDB, dropDB, closeDB } = require("../src/utils/dbHandler");
 const { createUser } = require("../src/db/actions");
 const { User, Post, Rating } = require("../src/db/models");
 
@@ -12,7 +13,7 @@ const VER = process.env.API_VER;
 let user;
 
 beforeAll(async () => {
-  await connect();
+  await connectDB();
 });
 
 beforeEach(async () => {
@@ -290,7 +291,7 @@ describe(`ENDPOINT /api/${VER}/rating`, () => {
         expect(updatedPost.get("dislikes")).toBe(0);
       });
 
-      await request(app)
+    await request(app)
       .post(`/api/${VER}/rating`)
       .send({
         userId: user._id,
@@ -311,7 +312,7 @@ describe(`ENDPOINT /api/${VER}/rating`, () => {
         expect(updatedPost.get("dislikes")).toBe(1);
       });
 
-      await request(app)
+    await request(app)
       .post(`/api/${VER}/rating`)
       .send({
         userId: user._id,
@@ -332,7 +333,7 @@ describe(`ENDPOINT /api/${VER}/rating`, () => {
         expect(updatedPost.get("dislikes")).toBe(0);
       });
 
-      await request(app)
+    await request(app)
       .post(`/api/${VER}/rating`)
       .send({
         userId: user._id,
@@ -352,7 +353,7 @@ describe(`ENDPOINT /api/${VER}/rating`, () => {
         expect(updatedPost.get("dislikes")).toBe(0);
       });
 
-      await request(app)
+    await request(app)
       .post(`/api/${VER}/rating`)
       .send({
         userId: user._id,
@@ -376,9 +377,9 @@ describe(`ENDPOINT /api/${VER}/rating`, () => {
 });
 
 afterEach(async () => {
-  await db.dropDatabase();
+  await dropDB();
 });
 
 afterAll(async () => {
-  await db.close();
+  await closeDB();
 });
